@@ -1,4 +1,4 @@
-"""Bastion-Shield.AI — Makami.AI multi-agent health wrapper."""
+"""Bohei-Shield.AI — Makami.AI multi-agent health wrapper."""
 
 from .wrapper import (
     AEAD_NAME,
@@ -35,6 +35,6 @@ __all__ = [
     "AgentRow",
     "TelemetryRecord",
     "EnvelopeSeal",
-    "BastionShield",
+    "BoheiShield",
 ]
 __version__ = "0.4.0"
