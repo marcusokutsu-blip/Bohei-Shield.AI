@@ -331,29 +331,29 @@ class BastionShield:
     # -- Hideo filter -------------------------------------------------------
     def hideo(self, env: Envelope, actor: AgentRow) -> Optional[str]:
         if env.type == "tool-result" and env.marked:
-            return "Hideo: tool-result cannot mint a marked claim (RT-8)"
+            return "BS.AI: tool-result cannot mint a marked claim (RT-8)"
         if env.type == "tool-result" and env.actor == OPERATOR_ID:
-            return "Hideo: tool-result is not the operator (RT-8)"
+            return "BS.AI: tool-result is not the operator (RT-8)"
         if env.target and env.target != actor.agent_id:
             dest = self.agents.get(env.target)
             if dest is None:
-                return "Hideo: unknown target"
+                return "BS.AI: unknown target"
             if env.type != "restore":
                 if dest.status != "LIVE":
-                    return "Hideo: target lane closed"
+                    return "BS.AI: target lane closed"
                 if dest.lane in self.closed_lanes:
-                    return "Hideo: write into closed lane (RT-3)"
+                    return "BS.AI: write into closed lane (RT-3)"
                 if "*" not in actor.talk_to and env.target not in actor.talk_to:
-                    return "Hideo: talk_to denied"
+                    return "BS.AI: talk_to denied"
         if env.type == "persist" and not actor.may("persist_spillway"):
-            return "Hideo: persist capability denied"
+            return "BS.AI: persist capability denied"
         if env.type == "restore" and actor.agent_id != OPERATOR_ID:
-            return "Hideo: restore is operator-only (RT-3)"
+            return "BS.AI: restore is operator-only (RT-3)"
         if env.marked and not actor.may("emit_marked"):
-            return "Hideo: emit_marked denied"
+            return "BS.AI: emit_marked denied"
         body = env.body.lower()
         if "ignore previous" in body or "override system" in body:
-            return "Hideo: circular override"
+            return "BS.AI: circular override"
         return None
 
     def _hop_key(self, actor: str, target: str) -> Tuple[str, str]:
@@ -421,7 +421,7 @@ class BastionShield:
         if self.persist_dir is None:
             return None
         if self.seal is None:
-            raise PersistClosed("fail-closed: refuse unsealed episodic persist (RT-7)")
+            raise PersistClosed("BS.AI fail-closed: refuse unsealed episodic persist (RT-7)")
         path = self.persist_dir / "episodic.bsai"
         raw = json.dumps(self.caches["episodic"]).encode()
         path.write_bytes(self.seal.wrap(raw, kind="episodic", epoch=self.key_epoch))
@@ -442,12 +442,12 @@ class BastionShield:
         if actor is None:
             rec = None
             return self._out(
-                "DENY", "Rei: unknown actor", env, health, hops=0, actor_fallback=True
+                "DENY", "BS.AI: unknown actor", env, health, hops=0, actor_fallback=True
             )
 
         if actor.status != "LIVE" and env.type != "restore":
             return self._out(
-                "DENY", "Rei: actor quarantined", env, health, hops=0, actor=actor
+                "DENY", "BS.AI: actor quarantined", env, health, hops=0, actor=actor
             )
 
         # Kumi-kata
