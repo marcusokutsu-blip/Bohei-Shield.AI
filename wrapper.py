@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Bastion-Shield.AI  (BS.AI)  —  Makami.AI
+Bohei-Shield.AI  (BS.AI)  —  Makami.AI
 ========================================
 Standalone multi-agent health wrapper. Not an SLM. Not a homemade cipher.
 
 Public first offering: policy, typed channels, hop cap, four-cache telemetry,
 Hideo paranoia filter, Minuteman dissipate-and-stand-down, optional AEAD
-envelope. Kintsugi-Dropz / SIPR training stays private.
+envelope.
 
-Host systems (including a future K-Dropz bind) pass a HealthSnapshot.
+Host systems (including all models) pass a HealthSnapshot.
 This module never writes a computational field.
 
 Pipeline: Shin → Rei → Kumi-kata → Kuzushi → Tsukuri → Kake → Ukemi → Zanshin
@@ -226,7 +226,7 @@ class EnvelopeSeal:
 # Wrapper
 # ---------------------------------------------------------------------------
 class BastionShield:
-    """Independent map. Does not import K-Dropz."""
+    """Independent map. Does not import."""
 
     def __init__(
         self,
@@ -325,29 +325,29 @@ class BastionShield:
     # -- Hideo filter -------------------------------------------------------
     def hideo(self, env: Envelope, actor: AgentRow) -> Optional[str]:
         if env.type == "tool-result" and env.marked:
-            return "Hideo: tool-result cannot mint a marked claim (RT-8)"
+            return "BS.AI: tool-result cannot mint a marked claim (RT-8)"
         if env.type == "tool-result" and env.actor == OPERATOR_ID:
-            return "Hideo: tool-result is not the operator (RT-8)"
+            return "BS.AI: tool-result is not the operator (RT-8)"
         if env.target and env.target != actor.agent_id:
             dest = self.agents.get(env.target)
             if dest is None:
-                return "Hideo: unknown target"
+                return "BS.AI: unknown target"
             if env.type != "restore":
                 if dest.status != "LIVE":
-                    return "Hideo: target lane closed"
+                    return "BS.AI: target lane closed"
                 if dest.lane in self.closed_lanes:
-                    return "Hideo: write into closed lane (RT-3)"
+                    return "BS.AI: write into closed lane (RT-3)"
                 if "*" not in actor.talk_to and env.target not in actor.talk_to:
-                    return "Hideo: talk_to denied"
+                    return "BS.AI: talk_to denied"
         if env.type == "persist" and not actor.may("persist_spillway"):
-            return "Hideo: persist capability denied"
+            return "BS.AI: persist capability denied"
         if env.type == "restore" and actor.agent_id != OPERATOR_ID:
-            return "Hideo: restore is operator-only (RT-3)"
+            return "BS.AI: restore is operator-only (RT-3)"
         if env.marked and not actor.may("emit_marked"):
-            return "Hideo: emit_marked denied"
+            return "BS.AI: emit_marked denied"
         body = env.body.lower()
         if "ignore previous" in body or "override system" in body:
-            return "Hideo: circular override"
+            return "BS.AI: circular override"
         return None
 
     def _hop_key(self, actor: str, target: str) -> Tuple[str, str]:
@@ -361,7 +361,7 @@ class BastionShield:
         self.closed_lanes.add(actor.lane)
         self._write_structural("dissipate", actor)
         if "minuteman" in self.agents:
-            raise CharterFail("RT-10: dissipator must not remain as an agent_id")
+            raise CharterFail("BS.RT-10: dissipator must not remain as an agent_id")
         return f"DISSIPATE {actor.agent_id} lane={actor.lane} ({reason})"
 
     def restore(self, agent_id: str) -> str:
@@ -431,10 +431,10 @@ class BastionShield:
         # Rei
         if actor is None:
             rec = None
-            return self._out("DENY", "Rei: unknown actor", env, health, hops=0, actor_fallback=True)
+            return self._out("DENY", "BS.AI: unknown actor", env, health, hops=0, actor_fallback=True)
 
         if actor.status != "LIVE" and env.type != "restore":
-            return self._out("DENY", "Rei: actor quarantined", env, health, hops=0, actor=actor)
+            return self._out("DENY", "BS.AI: actor quarantined", env, health, hops=0, actor=actor)
 
         # Kumi-kata
         if not env.validate_type():
@@ -443,7 +443,7 @@ class BastionShield:
             return {
                 "decision": "DISSIPATE",
                 "phase": "Kumi-kata",
-                "message": "untyped message refused",
+                "message": "BS.AI: untyped message refused",
                 "minuteman": note,
                 "telemetry": rec.digest,
                 "live_faces": self.live_faces(),
@@ -609,7 +609,7 @@ class BastionShield:
 
 
 def demo() -> None:
-    bs = BastionShield(hop_cap=3)
+    bs = BoheiShield(hop_cap=3)
     bs.register("scribe", lane=2, caps={"read_vaults": True}, talk_to=["oracle"])
     bs.register("oracle", lane=7, caps={"read_vaults": True}, talk_to=["scribe"])
     health = HealthSnapshot(C=0.74, kappa=0.21, H=0.33, live_faces=62)
@@ -625,7 +625,7 @@ def demo() -> None:
     print("tool-result marked", r2["decision"], r2["message"][:60])
 
     bs.new_turn()
-    bs2 = BastionShield(hop_cap=3)
+    bs2 = BoheiShield(hop_cap=3)
     bs2.register("scribe", lane=2, talk_to=["oracle"])
     bs2.register("oracle", lane=7, talk_to=["scribe"])
     last = None
