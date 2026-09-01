@@ -1,4 +1,4 @@
-# Bastion-Shield.AI
+# Bohei-Shield.AI
 
 **Makami.AI** first public module. A multi-agent health wrapper
 
@@ -24,12 +24,12 @@ Thermodynamic mapping is a **snapshot the host supplies** (`C`, `κ`, `H`, live 
 pip install cryptography    # optional; persist refuses without it
 ```
 
-Drop the `bastion_shield/` folder into a repo or a Cursor project. No K-Dropz import.
+Drop the `bohei_shield/` folder into a repo or a Cursor project. No K-Dropz import.
 
 ```python
-from bastion_shield import BastionShield, Envelope, HealthSnapshot
+from bohei_shield import BoheiShield, Envelope, HealthSnapshot
 
-bs = BastionShield(hop_cap=8)
+bs = BoheiShield(hop_cap=8)
 bs.register("scribe", lane=2, caps={"read_vaults": True}, talk_to=["oracle"])
 bs.register("oracle", lane=7, talk_to=["scribe"])
 
@@ -43,8 +43,8 @@ print(out["decision"], out["telemetry"])
 ## Demo and charter
 
 ```text
-python -m bastion_shield.wrapper
-python -m bastion_shield.test_charter
+python -m bohei_shield.wrapper
+python -m bohei_shield.test_charter
 ```
 
 Charter tests are RT-1 … RT-10 from the locked spec: residue in the KDF, phase/occupancy handled by epoch+kind headers, closed-lane writes, untyped bus, viral persist after quarantine, lean audit, fail-closed persist, tool-result injection, hop cascade / quorum freeze, standing Minuteman forbidden.
