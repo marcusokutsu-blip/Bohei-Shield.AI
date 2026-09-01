@@ -7,12 +7,12 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from bastion_shield import (
+from bohei_shield import (
     AEAD_NAME,
     CRYPTO_AVAILABLE,
     PersistClosed,
     CharterFail,
-    BastionShield,
+    BoheiShield,
     Envelope,
     EnvelopeSeal,
     HealthSnapshot,
@@ -20,8 +20,8 @@ from bastion_shield import (
 )
 
 
-def stack() -> BastionShield:
-    bs = BastionShield(hop_cap=3)
+def stack() -> BoheiShield:
+    bs = BoheiShield(hop_cap=3)
     bs.register("scribe", lane=2, caps={"read_vaults": True, "persist_spillway": True}, talk_to=["oracle"])
     bs.register("oracle", lane=7, caps={"read_vaults": True}, talk_to=["scribe"])
     return bs
