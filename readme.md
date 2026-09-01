@@ -1,8 +1,8 @@
 # Bastion-Shield.AI
 
-**Makami.AI** first public module. A multi-agent health wrapper.
+**Makami.AI** first public module. A multi-agent health wrapper
 
-It is **not** a language model, **not** a homemade cipher, and **not** Kintsugi-Dropz. Those stay private while they train. This wrapper is the map you put in front of a stack of agents so one sick sibling cannot poison the bus.
+It is **not** a language model and **not** a homemade cipher. This wrapper is the map you put in front of a stack of agents so one sick sibling cannot poison the bus.
 
 ## What it is
 
@@ -51,13 +51,13 @@ Charter tests are RT-1 … RT-10 from the locked spec: residue in the KDF, phase
 
 ## What this is not
 
-- Not Kintsugi-Dropz, not a trainable WLM, not a vision stack
+- Not a trainable WLM, not a vision stack
 - Not “entropic cryptography.” Confidentiality is a reviewed AEAD. The proprietary piece is **binding and scheduling**: epoch, kind, occupancy, health halt
 - Not a keyword denylist pretending to be a perimeter
 
 ## Bind later
 
-A host (K-Dropz or anything else) should:
+A host (Any Model or stack) should:
 
 1. Pass `HealthSnapshot` from its own sensors
 2. Optionally pass a `claim_clerk` callable; the wrapper will not mint `[AXIOM]`
