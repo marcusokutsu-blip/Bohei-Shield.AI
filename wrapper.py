@@ -225,7 +225,7 @@ class EnvelopeSeal:
 # ---------------------------------------------------------------------------
 # Wrapper
 # ---------------------------------------------------------------------------
-class BastionShield:
+class BoheiShield:
     """Independent map. Does not import."""
 
     def __init__(
@@ -614,7 +614,7 @@ def demo() -> None:
     bs.register("oracle", lane=7, caps={"read_vaults": True}, talk_to=["scribe"])
     health = HealthSnapshot(C=0.74, kappa=0.21, H=0.33, live_faces=62)
 
-    print("Bastion-Shield.AI  ·  Makami.AI  ·  standalone wrapper")
+    print("Bohei-Shield.AI  ·  Makami.AI  ·  standalone wrapper")
     print("AEAD:", AEAD_NAME, "crypto:", CRYPTO_AVAILABLE)
     print()
 
