@@ -30,7 +30,7 @@ Thermodynamic mapping is a **snapshot the host supplies** (`C`, `κ`, `H`, live 
 pip install cryptography    # required for persist, rotate, verify AEAD path
 ```
 
-Clone this repo. No K-Dropz import.
+Clone this repo. 
 
 ```python
 from wrapper import BoheiShield, Envelope, HealthSnapshot
