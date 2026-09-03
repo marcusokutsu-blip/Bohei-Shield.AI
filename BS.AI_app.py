@@ -2,7 +2,7 @@
 """Bohei-Shield.AI CLI. Use --verify-BS.AI for the production self-check."""
 import sys
 try:
-    from wrapper import main
+    from bohei_shield import main
 except ImportError:
     from bohei_shield.wrapper import main
 
