@@ -811,8 +811,7 @@ class BoheiShield:
         }
 
 
-# Public name is BoheiShield. Former planning name remains an alias.
-BastionShield = BoheiShield
+# Public name is BoheiShield. BS.AI = BoheiShield
 
 
 def _default_live_clerk(body: str) -> Tuple[bool, str]:
